@@ -11,10 +11,8 @@ DOSSEG
                DB "Press 'R' For RETURN to Main Menu",0DH,0AH
                DB "----------------------------------------------",0DH,0AH
                DB "Enter Your CHOICE",0DH,0AH,'$'
-
      NUM1      DB "Enter First Number",0DH,0AH,'$'
      NUM2      DB "Enter Second Number",0DH,0AH,'$'
-
      ADD1      DB "FOR ADDITION",0DH,0AH,'$'
      SUB1      DB "FOR SUBTRACTION",0DH,0AH,'$'
      MUL1      DB "FOR MULTIPLICATION",0DH,0AH,'$'
@@ -30,20 +28,17 @@ DOSSEG
 MAIN PROC
 .STARTUP
      jmp START
-
-_ADD:                                   ; PERFORMING ADDITION
+_ADD:              ; PERFORMING ADDITION
      MOV  AH,09H
      MOV  DX,OFFSET ADD1
      INT  21H
-     ;FIRST OPERAND
-     MOV  AH,09H
+     MOV  AH,09H    ;FIRTS OPERAND
      MOV  DX,OFFSET NUM1
      INT  21H
      MOV  AH,01H
      INT  21H
      MOV  OP1,AL
-     ;SECOND OPERAND
-     MOV  AH,09H
+     MOV  AH,09H   ;SECOND OPERAND
      MOV  DX,OFFSET NUM2
      INT  21H
      MOV  AH,01H
@@ -65,15 +60,13 @@ _SUB:                                   ; PERFORMING SUBTRACTION
      MOV  AH,09H
      MOV  DX,OFFSET SUB1
      INT  21H
-     ;FIRST OPERAND
-     MOV  AH,09H
+     MOV  AH,09H   ;FIRTS OPERAND
      MOV  DX,OFFSET NUM1
      INT  21H
      MOV  AH,01H
      INT  21H
      MOV  OP1,AL
-     ;SECOND OPERAND
-     MOV  AH,09H
+     MOV  AH,09H   ;SECOND OPERAND
      MOV  DX,OFFSET NUM2
      INT  21H
      MOV  AH,01H
@@ -95,16 +88,14 @@ _MUL:                                   ; PERFORMING MULTIPLICATION
      MOV  AH,09H
      MOV  DX,OFFSET MUL1
      INT  21H
-     ;FIRST OPERAND
-     MOV  AH,09H
+     MOV  AH,09H  ;FIRST OPERAND
      MOV  DX,OFFSET NUM1
      INT  21H
      MOV  AH,01H
      INT  21H
      SUB  AL,30H
      MOV  OP1,AL
-     ;SECOND OPERAND
-     MOV  AH,09H
+     MOV  AH,09H    ;SECOND OPERAND
      MOV  DX,OFFSET NUM2
      INT  21H
      MOV  AH,01H
@@ -121,21 +112,18 @@ _MUL:                                   ; PERFORMING MULTIPLICATION
      call RESULT
      call CONT
      jmp  START
-
 _DIV:                                   ; PERFORMING DIVISION
      MOV  AH,09H
      MOV  DX,OFFSET DIV1
      INT  21H
-     ;FIRST OPERAND
-     MOV  AH,09H
+     MOV  AH,09H    ;FIRST OPERAND
      MOV  DX,OFFSET NUM1
      INT  21H
      MOV  AH,01H
      INT  21H
      SUB  AL,30H
      MOV  OP1,AL
-     ;SECOND OPERAND
-     MOV  AH,09H
+     MOV  AH,09H   ;SECOND OPERAND
      MOV  DX,OFFSET NUM2
      INT  21H
      MOV  AH,01H
@@ -153,13 +141,11 @@ _DIV:                                   ; PERFORMING DIVISION
      call RESULT
      call CONT
      jmp  START
-
 RESULT PROC
      MOV  AH,2
      INT  21H
      RET
 RESULT ENDP
-
 CONT PROC
      MOV  AH,09H
      MOV  DX,OFFSET CONTINUE
@@ -174,7 +160,6 @@ CONT PROC
      JE   EXIT
      RET
 CONT ENDP
-
 START:
      MOV  AH, 09H
      MOV  DX, OFFSET MAIN_MENU
