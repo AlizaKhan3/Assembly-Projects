@@ -167,13 +167,13 @@ START:
      MOV  AH, 01H
      INT  21H
      CMP  AL, 'A'
-     JE   _ADD
+     JMP   _ADD
      CMP  AL, 'S'
-     JE   _SUB
+     JMP   _SUB
      CMP  AL, 'M'
-     JE   _MUL
+     JMP   _MUL
      CMP  AL, 'D'
-     JE   _DIV
+     JMP   _DIV
      CMP  AL, 'E'
      JE   EXIT
      JMP  START                        ;If none of the above, go back to main menu
