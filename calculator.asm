@@ -1,5 +1,4 @@
-; By: Ali Hassan Soomro
-
+dosseg
 .MODEL SMALL
 .STACK 100H
 .DATA
@@ -10,8 +9,7 @@ MAIN_MENU DB ,0DH,0AH,"Calculater",0DH,0AH
           DB "Press 'D' For DIVISION",0DH,0AH
           DB "Press 'E' For EXIT",0DH,0AH
           DB "Press 'R' For RETURN to Main Menu",0DH,0AH
-          DB "*******************************",0DH,0AH
-          DB "*******************************",0DH,0AH
+          DB "---------------------------------",0DH,0AH
           DB "Enter Your CHOICE",0DH,0AH,'$'     
      NUM1 DB "Enter First Number",0DH,0AH,'$'
      NUM2 DB ,0DH,0AH,"Enter Second Number",0DH,0AH,'$'
