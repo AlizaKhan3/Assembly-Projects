@@ -20,7 +20,7 @@ DOSSEG
      INPUT2     DB "Enter SeCONTd Number",0DH,0AH,'$'
      EX       DB "GOOD BYE AND HAVE A NICE TIME :)",0DH,0AH,'$'
      ANS      DB "ANSWER ",0DH,0AH,'$'
-     CONTINUE DB "DO YOU WANT TO CONTINUE",0DH,0AH,'$'
+     CONTTINUE DB "DO YOU WANT TO CONTTINUE",0DH,0AH,'$'
      OP1      DB ?
      OP2      DB ?
      Operand  DB ?
@@ -62,7 +62,7 @@ MAIN PROC
      ; AAS
      ; OR   AX, 3030H
      
-             call CONT
+             call CONTT
              jmp  START
 
      _SUB:                               ; PERFORMING SUBTRACTION
@@ -99,7 +99,7 @@ MAIN PROC
      ; AAS
      ; OR   AX, 3030H
      
-             call CONT
+             call CONTT
              jmp  START
 
      _MUL:                               ; PERFORMING MULTIPLICATION
@@ -146,7 +146,7 @@ MAIN PROC
              MOV  AH,2
              INT  21H
              call RESULT
-             call CONT
+             call CONTT
              jmp  START
      _DIV:                               ; PERFORMING DIVISION
              MOV  AH,09H
@@ -187,16 +187,16 @@ MAIN PROC
              call RESULT
      ;   MOV AH,4CH
      ; INT 21H
-             call CONT
+             call CONTT
              jmp  START
 RESULT PROC
              MOV  AH,2
              INT  21H
              RET
 RESULT ENDP
-CONT PROC
+CONTT PROC
              MOV  AH,09H
-             MOV  DX,OFFSET CONTINUE
+             MOV  DX,OFFSET CONTTINUE
              INT  21H
              MOV  AH,01H
              INT  21H
@@ -207,7 +207,7 @@ CONT PROC
              CMP  AL,'E'
              JE   EXIT
              RET
-CONT ENDP
+CONTT ENDP
      START:  
              MOV  AH, 09H
              MOV  DX, OFFSET OPTIONS

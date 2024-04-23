@@ -294,7 +294,7 @@ begin:
 
 fills_str_lines:
 		cmp str_word[bx],"$"
-		je  CONTinues
+		je  CONTtinues
 
 		cmp str_word[bx]," "
 		je  str_spaceline
@@ -312,7 +312,7 @@ str_spaceline:
 		inc bx
 		jmp fills_str_lines
 
-CONTinues:
+CONTtinues:
 		mov bx,offset size_none
 		sub bx,offset str_word
 		sub bx, 1
@@ -326,7 +326,7 @@ counts_space_lines:
         cmp str_word[bx], 32
         je discard_space_lines
         cmp str_word[bx], "$"
-        je CONTinues_two
+        je CONTtinues_two
 
         inc bx
         jmp counts_space_lines
@@ -336,7 +336,7 @@ discard_space_lines:
         sub size_none_minor, 1
         jmp counts_space_lines
 
-CONTinues_two:
+CONTtinues_two:
 		mov line,14
 		mov column_a,16
 		mov bx,0

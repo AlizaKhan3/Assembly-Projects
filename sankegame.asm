@@ -19,7 +19,7 @@ bottom equ top+row
 .model small
 .data          
     msg db "Welcome to the snake game!!",0
-    instructions db 0AH,0DH,"Use a, s, d and f to CONTrol your snake",0AH,0DH,"Use q anytime to quit",0DH,0AH, "Press any key to CONTinue$"
+    instructions db 0AH,0DH,"Use a, s, d and f to CONTtrol your snake",0AH,0DH,"Use q anytime to quit",0DH,0AH, "Press any key to CONTtinue$"
     quitmsg db "Thanks for playing! hope you enjoyed",0
     gameovermsg db "OOPS!! your snake died! :P ", 0
     scoremsg db "Score: ",0
@@ -150,7 +150,7 @@ regenerate:
     je ret_fruitactive
     mov ah, 00
     int 1Ah
-    ;dx CONTains the ticks
+    ;dx CONTtains the ticks
     push dx
     mov ax, dx
     xor dx, dx
@@ -215,8 +215,8 @@ dispnum proc
     test ax,ax
     jz retz
     xor dx, dx
-    ;ax CONTains the number to be displayed
-    ;bx must CONTain 10
+    ;ax CONTtains the number to be displayed
+    ;bx must CONTtain 10
     mov bx,10
     div bx
     ;dispnum ax first.
@@ -283,7 +283,7 @@ draw endp
 
 
 
-;dl CONTains the ascii character if keypressed, else dl CONTains 0
+;dl CONTtains the ascii character if keypressed, else dl CONTtains 0
 ;uses dx and ax, preserves other registers
 readchar proc
     mov ah, 01H
@@ -391,7 +391,7 @@ outside:
     ;now shift the head in its proper direction and then clear the last segment. 
     ;But don't clear the last segment if the snake has eaten the fruit
     pop ax
-    ;al CONTains the snake head direction
+    ;al CONTtains the snake head direction
     
     push dx
     ;dx now CONTsists the coordinates of the last segment, we can use this to clear it
@@ -427,9 +427,9 @@ next_3:
     
 done_checking_the_head:    
     mov [bx],dx
-    ;dx CONTains the new position of the head, now check whats in that position   
+    ;dx CONTtains the new position of the head, now check whats in that position   
     call readcharat ;dx
-    ;bl CONTains the result
+    ;bl CONTtains the result
     
     cmp bl, 'F'
     je i_ate_fruit
@@ -543,8 +543,8 @@ printbox endp
               
               
               
-;dx CONTains row, col
-;bl CONTains the character to write
+;dx CONTtains row, col
+;bl CONTtains the character to write
 ;uses di. 
 writecharat proc
     ;80x25
@@ -582,7 +582,7 @@ writecharat endp
             
             
             
-;dx CONTains row,col
+;dx CONTtains row,col
 ;returns the character at bl
 ;uses di
 readcharat proc
@@ -617,8 +617,8 @@ readcharat endp
 
 
 
-;dx CONTains row, col
-;bx CONTains the offset of the string
+;dx CONTtains row, col
+;bx CONTtains the offset of the string
 writestringat proc
     push dx
     mov ax, dx

@@ -12,7 +12,7 @@ DOSSEG
               DB "----------------------------------------------",0DH,0AH
               DB "Enter Your CHOICE: ",13,10,'$'
      INPUT1   DB "Enter First Number: ",13,10,'$'
-     INPUT2   DB "Enter SeCONTd Number: ",13,10,'$'
+     INPUT2   DB "Enter Second Number: ",13,10,'$'
      ADD1     DB " --> For Addition",13,10,'$'
      SUB2     DB " --> For Subtraction",13,10,'$'
      MUL3     DB " --> For Multiplication",13,10,'$'
@@ -22,26 +22,29 @@ DOSSEG
      CONTINUE DB " DO YOU WANT TO CONTINUE? ",13,10,'$'
      OP1      DB ?
      OP2      DB ?
-     CONT      DB ?
+     ; Operand   DB ?
+     CON      DB ?
      ;----------------------------------------------------------------------------------------------
+
 .CODE
-MAIN PROC          ;Main Procedure starts
+MAIN PROC          ;Main Procedure Starts here
 .STARTUP
                      jmp  START
+
      ;----------------------Addition ------------------------------------------------------------------------
      _ADD:                                       ;PERFORMING ADDITION
                      MOV  AH,09H
                      MOV  DX,OFFSET ADD1
                      INT  21H
                      CALL NEWLINE
-                     MOV  AH,09H                 ;FIRTS Operand
+                     MOV  AH,09H                 ;FIRTS OPERAND
                      MOV  DX,OFFSET INPUT1
                      INT  21H
                      MOV  AH,01H
                      INT  21H
                      MOV  OP1,AL
                      CALL NEWLINE
-                     MOV  AH,09H                 ;SECONTD Operand
+                     MOV  AH,09H                 ;SECOND OPERAND
                      MOV  DX,OFFSET INPUT2
                      INT  21H
                      MOV  AH,01H
@@ -70,14 +73,14 @@ MAIN PROC          ;Main Procedure starts
                      MOV  DX, OFFSET SUB2
                      INT  21H
                      CALL NEWLINE
-                     MOV  AH,09H                 ;FIRTS Operand
+                     MOV  AH,09H                 ;FIRTS OPERAND
                      MOV  DX,OFFSET INPUT1
                      INT  21H
                      MOV  AH,01H
                      INT  21H
                      MOV  OP1,AL
                      CALL NEWLINE
-                     MOV  AH,09H                 ;SECONTD Operand
+                     MOV  AH,09H                 ;SECOND OPERAND
                      MOV  DX,OFFSET INPUT2
                      INT  21H
                      MOV  AH,01H
@@ -108,7 +111,7 @@ MAIN PROC          ;Main Procedure starts
                      INT  21H
                      CALL NEWLINE
 
-                     MOV  AH,09H                 ;FIRST Operand
+                     MOV  AH,09H                 ;FIRST OPERAND
                      MOV  DX,OFFSET INPUT1
                      INT  21H
                      MOV  AH,01H
@@ -117,7 +120,7 @@ MAIN PROC          ;Main Procedure starts
                      MOV  OP1,AL
                      CALL NEWLINE
      
-                     MOV  AH,09H                 ;SeCONTd Operand
+                     MOV  AH,09H                 ;Second Operand
                      MOV  DX,OFFSET INPUT2
                      INT  21H
                      MOV  AH,01H
@@ -137,15 +140,15 @@ MAIN PROC          ;Main Procedure starts
                      CMP  AH, 0                  ;Checking if the result is more than one digit (ans>9)
                      JNZ  MULTIPLE_DIGITS
 
-                     MOV  DL, AL                 ;If the result is single digit, CONTvert it to ASCII and print
-                     ADD  DL, 48                 ;CONTvert to ASCII
+                     MOV  DL, AL                 ;If the result is single digit, convert it to ASCII and print
+                     ADD  DL, 48                 ;Convert to ASCII
                      MOV  AH, 02H                ;Prints Single character
                      INT  21H
                      CALL NEWLINE
                      JMP  START                  ;Jump to Main Menu
 
      MULTIPLE_DIGITS:                            ;If the result is multiple digits
-                     MOV  CX, 10                 ;Set CX to 10 for decimal CONTversion
+                     MOV  CX, 10                 ;Set CX to 10 for decimal conversion
                      MOV  SI, OFFSET RESULT      ;Set SI to point to RESULT
                      MOV  DX, OFFSET RESULT      ;Set DX to point to RESULT
                      MOV  AH, 09H                ;Print string function
@@ -162,7 +165,7 @@ MAIN PROC          ;Main Procedure starts
                      INT  21H
                      CALL NEWLINE
 
-                     MOV  AH,09H                 ;FIRST Operand
+                     MOV  AH,09H                 ; FIRST Operand
                      MOV  DX,OFFSET INPUT1
                      INT  21H
                      MOV  AH,01H
@@ -171,27 +174,36 @@ MAIN PROC          ;Main Procedure starts
                      MOV  OP1,AL
                      CALL NEWLINE
 
-                     MOV  AH,09H                 ;SECONTD Operand
+                     MOV  AH,09H                 ; SECOND Operand
                      MOV  DX,OFFSET INPUT2
                      INT  21H
                      MOV  AH,01H
                      INT  21H
                      SUB  AL,48
                      MOV  OP2,AL
-                     INT  21H
                      CALL NEWLINE
 
                      MOV  AH,09H
-                     MOV  DX, OFFSET ANS
+                     MOV  DX, OFFSET ANS         ;PRINT ANSWER
                      INT  21H
-                     MOV  AX,0000H
-                     MOV  AL,OP1
-                     MOV  BL,OP2
-                     DIV  BL
-                     ADD  AL,48
-                     MOV  DL,BL
-                     ADD  DL,48
-                     CALL RESULT
+
+                     MOV  AX,0000H               ;Clear AX register
+                     MOV  AL,OP1                 ;Load dividend (numerator)
+                     MOV  BL,OP2                 ;Load divisor  (denominator)
+                     DIV  BL                     ;Perform division (AX = AX / BL, quotient in AL, remainder in AH)
+    
+     ;Print quotient
+                     MOV  DL, AL                 ;Move quotient to DL
+                     ADD  DL, 48                 ;Convert quotient to ASCII
+                     MOV  AH, 02H                ;Print Single character
+                     INT  21H
+
+     ; Print remainder
+     ;     MOV  DL, AH                 ;Move remainder to DL
+     ;     ADD  DL, 48                 ;Convert remainder to ASCII
+     ;     MOV  AH, 02H                ;Print Single character
+     ;     INT  21H
+
                      CALL NEWLINE
                      CALL CONT
                      JMP  START
@@ -210,8 +222,8 @@ CONT PROC
                      INT  21H
                      MOV  AH,01H
                      INT  21H
-                     MOV  CONT,AL
-                     MOV  AL,CONT
+                     MOV  CON,AL
+                     MOV  AL,CON
                      CMP  AL,'Y'
                      JE   START
                      CMP  AL,'E'
