@@ -58,8 +58,7 @@ CALL NEWLINE
      MOV DL,AL
      SUB DL,48
     Call RESULT
-      MOV AH,4CH 
-     INT 21H
+
      ; AAS
      ; OR   AX, 3030H
      
@@ -96,8 +95,7 @@ CALL NEWLINE
      ADD DL,48
      
      Call RESULT
-       MOV AH,4CH 
-     INT 21H
+  
      ; AAS
      ; OR   AX, 3030H
      
@@ -147,8 +145,6 @@ _MUL:                                   ; PERFORMING MULTIPLICATION
       ADD DL,48 
      MOV AH,2 
      INT 21H 
-     MOV AH,4CH 
-     INT 21H
      call RESULT
      call CONT
      jmp  START
@@ -189,8 +185,8 @@ _DIV:                                   ; PERFORMING DIVISION
           MOV DL,BL
           ADD DL,48
      call RESULT
-       MOV AH,4CH 
-     INT 21H
+     ;   MOV AH,4CH 
+     ; INT 21H
      call CONT
      jmp  START
 RESULT PROC
