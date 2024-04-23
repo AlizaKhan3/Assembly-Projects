@@ -2,7 +2,7 @@ DOSSEG
 .MODEL SMALL
 .STACK 100H
 .DATA
-     OPTIONS  DB 13,10,"CALCULATOR --> ADD,SUB,MUL,DIV------",13,10
+     OPTIONS  DB 13,10,"CALCULATOR --> Performs the following Operations",13,10
               DB "Press '1' FOR ADDITION",13,10
               DB "Press '2' FOR SUBTRACTION",13,10
               DB "Press '3' FOR MULTIPLICATION",13,10
@@ -11,8 +11,8 @@ DOSSEG
               DB "Press '6' FOR RETURN TO OPTIONS",13,10
               DB "----------------------------------------------",13,10
               DB "Enter Your CHOICE: ",13,10,'$'
-     INPUT1   DB "Enter First Number: ",13,10,'$'
-     INPUT2   DB "Enter Second Number: ",13,10,'$'
+     INPUT1   DB "Enter First Number (0-9): ",13,10,'$'
+     INPUT2   DB "Enter Second Number (0-9): ",13,10,'$'
      ADD1     DB " --> For Addition",13,10,'$'
      SUB2     DB " --> For Subtraction",13,10,'$'
      MUL3     DB " --> For Multiplication",13,10,'$'
