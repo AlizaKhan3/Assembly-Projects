@@ -1,0 +1,86 @@
+.model small
+.stack 100h
+
+.data
+    num1 db ?
+    num2 db ?
+    quotient db ?
+    remainder db ?
+    prompt1 db 'Enter dividend: $'
+    prompt2 db 'Enter divisor: $'
+    quotientMsg db 'The quotient is: $'
+    remainderMsg db 'The remainder is: $'
+    errorMsg db 'Error: Division by zero is not allowed.$'
+
+.code
+main proc
+mov ax,@data
+mov ds,ax
+    ; prompt user for dividend
+    mov ah, 09h
+    mov dx, offset prompt1
+    int 21h
+
+    ; read dividend
+    mov ah, 01h
+    int 21h
+    sub al, 30h
+    mov num1, al
+
+    ; prompt user for divisor
+    mov ah, 09h
+    mov dx, offset prompt2
+    int 21h
+
+    ; read divisor
+    mov ah, 01h
+    int 21h
+    sub al, 30h
+    mov num2, al
+
+    ; check for division by zero
+    cmp num2, 0
+    je error
+
+    ; perform division
+    mov al, num1
+    div num2
+
+    ; store the quotient and remainder
+    mov quotient, al
+    mov remainder, ah
+
+    ; print the quotient
+    mov ah, 09h
+    mov dx, offset quotientMsg
+    int 21h
+
+    mov dl, quotient
+    add dl, 30h
+    mov ah, 02h
+    int 21h
+
+    ; print the remainder
+    mov ah, 09h
+    mov dx, offset remainderMsg
+    int 21h
+
+    mov dl, remainder
+    add dl, 30h
+    mov ah, 02h
+    int 21h
+
+    jmp exit
+
+error:
+    ; print error message for division by zero
+    mov ah, 09h
+    mov dx, offset errorMsg
+    int 21h
+
+exit:
+    ; terminate the program
+    mov ax, 4C00h
+    int 21h
+main endp
+end main
