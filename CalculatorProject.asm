@@ -2,7 +2,7 @@ DOSSEG
 .MODEL SMALL
 .STACK 100H
 .DATA
-     OPTIONS  DB 13,10,"CALCULATOR --> Performs the following Operations",13,10
+     OPTIONS  DB 13,10,"CALCULATOR --> Performs the following Operations ",13,10
               DB "Press '1' FOR ADDITION",13,10
               DB "Press '2' FOR SUBTRACTION",13,10
               DB "Press '3' FOR MULTIPLICATION",13,10
@@ -10,7 +10,7 @@ DOSSEG
               DB "Press '5' FOR EXIT",13,10
               DB "Press '6' FOR RETURN TO OPTIONS",13,10
               DB "----------------------------------------------",13,10
-              DB "Enter Your CHOICE: ",13,10,'$'
+              DB "Enter Your Choice: ",13,10,'$'
      INPUT1   DB "Enter First Number (0-9): ",13,10,'$'
      INPUT2   DB "Enter Second Number (0-9): ",13,10,'$'
      ADD1     DB " --> For Addition",13,10,'$'
@@ -19,7 +19,7 @@ DOSSEG
      DIV4     DB " --> For Division",13,10,'$'
      EX       DB " THANKYOU FOR YOUR TIME! :) ",13,10,'$'
      ANS      DB "ANSWER: ",13,10,'$'
-     CONTINUE DB " DO YOU WANT TO CONTINUE? ",13,10,'$'
+     CONTINUE DB " DO YOU WANT TO CONTINUE? IF YES, PRESS '6' ",13,10,'$'
      OP1      DB ?
      OP2      DB ?
      CON      DB ?
