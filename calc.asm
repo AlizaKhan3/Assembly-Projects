@@ -3,13 +3,13 @@ DOSSEG
 .STACK 100H
 .DATA
      OPTIONS  DB 13,10,"CALCULATOR --> ADD,SUB,MUL,DIV------",13,10
-              DB "Press '1' For ADDITION",13,10
-              DB "Press '2' For SUBTRACTION",13,10
-              DB "Press '3' For MULTIPLICATION",13,10
-              DB "Press '4' For DIVISION",13,10
-              DB "Press '5' For EXIT",13,10
-              DB "Press '6' For RETURN to Main Menu",13,10
-              DB "----------------------------------------------",0DH,0AH
+              DB "Press '1' FOR ADDITION",13,10
+              DB "Press '2' FOR SUBTRACTION",13,10
+              DB "Press '3' FOR MULTIPLICATION",13,10
+              DB "Press '4' FOR DIVISION",13,10
+              DB "Press '5' FOR EXIT",13,10
+              DB "Press '6' FOR RETURN TO OPTIONS",13,10
+              DB "----------------------------------------------",13,10
               DB "Enter Your CHOICE: ",13,10,'$'
      INPUT1   DB "Enter First Number: ",13,10,'$'
      INPUT2   DB "Enter Second Number: ",13,10,'$'
@@ -22,14 +22,12 @@ DOSSEG
      CONTINUE DB " DO YOU WANT TO CONTINUE? ",13,10,'$'
      OP1      DB ?
      OP2      DB ?
-     ; Operand   DB ?
      CON      DB ?
      ;----------------------------------------------------------------------------------------------
-
 .CODE
 MAIN PROC          ;Main Procedure Starts here
 .STARTUP
-                     jmp  START
+     jmp  START
 
      ;----------------------Addition ------------------------------------------------------------------------
      _ADD:                                       ;PERFORMING ADDITION
@@ -61,8 +59,6 @@ MAIN PROC          ;Main Procedure Starts here
                      SUB  DL,48
                      CALL RESULT
                      CALL NEWLINE
-     ; AAS
-     ; OR   AX, 3030H
                      CALL CONT
                      JMP  START
      ;  -------------------------------------------------------------------------------------------------------
@@ -73,6 +69,7 @@ MAIN PROC          ;Main Procedure Starts here
                      MOV  DX, OFFSET SUB2
                      INT  21H
                      CALL NEWLINE
+     
                      MOV  AH,09H                 ;FIRTS OPERAND
                      MOV  DX,OFFSET INPUT1
                      INT  21H
@@ -80,6 +77,7 @@ MAIN PROC          ;Main Procedure Starts here
                      INT  21H
                      MOV  OP1,AL
                      CALL NEWLINE
+     
                      MOV  AH,09H                 ;SECOND OPERAND
                      MOV  DX,OFFSET INPUT2
                      INT  21H
@@ -87,21 +85,20 @@ MAIN PROC          ;Main Procedure Starts here
                      INT  21H
                      MOV  OP2,AL
                      CALL NEWLINE
+     
                      MOV  AH,09H                 ;PRINTS ANSWER
                      MOV  DX, OFFSET ANS
                      INT  21H
-
+     
                      MOV  AL,OP1                 ;PERFORMING SUBTRACTION
                      MOV  BL,OP2
                      SUB  AL,BL
                      MOV  DL,AL
                      ADD  DL,48
-                     Call RESULT
+                     CALL RESULT
                      CALL NEWLINE
-     ; AAS
-     ; OR   AX, 3030H
-                     call CONT
-                     jmp  START
+                     CALL CONT
+                     JMP  START
      ; -----------------------------------------------------------------------------------------------
 
      ; ----------------------------Multiplication-----------------------------------------------------
@@ -136,7 +133,6 @@ MAIN PROC          ;Main Procedure Starts here
                      MOV  AL,OP1                 ;PERFORMING MULTIPLICATION
                      MOV  BL,OP2
                      MUL  BL
-     
                      CMP  AH, 0                  ;Checking if the result is more than one digit (ans>9)
                      JNZ  MULTIPLE_DIGITS
 
@@ -186,30 +182,26 @@ MAIN PROC          ;Main Procedure Starts here
                      MOV  AH,09H
                      MOV  DX, OFFSET ANS         ;PRINT ANSWER
                      INT  21H
-
                      MOV  AX,0000H               ;Clear AX register
                      MOV  AL,OP1                 ;Load dividend (numerator)
                      MOV  BL,OP2                 ;Load divisor  (denominator)
                      DIV  BL                     ;Perform division (AX = AX / BL, quotient in AL, remainder in AH)
-    
      ;Print quotient
                      MOV  DL, AL                 ;Move quotient to DL
                      ADD  DL, 48                 ;Convert quotient to ASCII
                      MOV  AH, 02H                ;Print Single character
                      INT  21H
-
      ; Print remainder
      ;     MOV  DL, AH                 ;Move remainder to DL
      ;     ADD  DL, 48                 ;Convert remainder to ASCII
      ;     MOV  AH, 02H                ;Print Single character
      ;     INT  21H
-
                      CALL NEWLINE
                      CALL CONT
                      JMP  START
      ; ---------------------------------------------------------------------------------
-
-     ;---------------------------------Procedures----------------------------------
+   
+     ;---------------------------------Procedures---------------------------------------
 RESULT PROC
                      MOV  AH,2
                      INT  21H
@@ -241,7 +233,7 @@ NEWLINE PROC
                      RET
 NEWLINE ENDP
      ;----------------------All Procedures End-----------------
-     ;----------------------Label--------------------------
+     ;----------------------------Label--------------------------
      START:          
                      MOV  AH, 09H
                      MOV  DX, OFFSET OPTIONS
@@ -293,7 +285,6 @@ NEWLINE ENDP
                      MOV  AH,09H
                      MOV  DX,OFFSET EX
                      INT  21H
-
      ;------------------All Labels ended here-------------------------
 MAIN ENDP
 END MAIN
