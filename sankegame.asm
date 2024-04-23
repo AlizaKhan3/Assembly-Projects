@@ -19,7 +19,7 @@ bottom equ top+row
 .model small
 .data          
     msg db "Welcome to the snake game!!",0
-    instructions db 0AH,0DH,"Use a, s, d and f to control your snake",0AH,0DH,"Use q anytime to quit",0DH,0AH, "Press any key to continue$"
+    instructions db 0AH,0DH,"Use a, s, d and f to CONTrol your snake",0AH,0DH,"Use q anytime to quit",0DH,0AH, "Press any key to CONTinue$"
     quitmsg db "Thanks for playing! hope you enjoyed",0
     gameovermsg db "OOPS!! your snake died! :P ", 0
     scoremsg db "Score: ",0
@@ -131,7 +131,7 @@ delay proc
 jmp_delay:
     int 1Ah
     sub dx, bx
-    ;there are about 18 ticks in a second, 10 ticks are about enough
+    ;there are about 18 ticks in a seCONTd, 10 ticks are about enough
     cmp dl, delaytime                                                      
     jl jmp_delay    
     ret
@@ -150,7 +150,7 @@ regenerate:
     je ret_fruitactive
     mov ah, 00
     int 1Ah
-    ;dx contains the ticks
+    ;dx CONTains the ticks
     push dx
     mov ax, dx
     xor dx, dx
@@ -215,8 +215,8 @@ dispnum proc
     test ax,ax
     jz retz
     xor dx, dx
-    ;ax contains the number to be displayed
-    ;bx must contain 10
+    ;ax CONTains the number to be displayed
+    ;bx must CONTain 10
     mov bx,10
     div bx
     ;dispnum ax first.
@@ -283,7 +283,7 @@ draw endp
 
 
 
-;dl contains the ascii character if keypressed, else dl contains 0
+;dl CONTains the ascii character if keypressed, else dl CONTains 0
 ;uses dx and ax, preserves other registers
 readchar proc
     mov ah, 01H
@@ -345,7 +345,7 @@ next_14:
     je quit_keyboardfunctions
     ret    
 quit_keyboardfunctions:   
-    ;conditions for quitting in here please  
+    ;CONTditions for quitting in here please  
     inc quit
     ret
     
@@ -391,10 +391,10 @@ outside:
     ;now shift the head in its proper direction and then clear the last segment. 
     ;But don't clear the last segment if the snake has eaten the fruit
     pop ax
-    ;al contains the snake head direction
+    ;al CONTains the snake head direction
     
     push dx
-    ;dx now consists the coordinates of the last segment, we can use this to clear it
+    ;dx now CONTsists the coordinates of the last segment, we can use this to clear it
     
     
     lea bx, head
@@ -427,9 +427,9 @@ next_3:
     
 done_checking_the_head:    
     mov [bx],dx
-    ;dx contains the new position of the head, now check whats in that position   
+    ;dx CONTains the new position of the head, now check whats in that position   
     call readcharat ;dx
-    ;bl contains the result
+    ;bl CONTains the result
     
     cmp bl, 'F'
     je i_ate_fruit
@@ -543,8 +543,8 @@ printbox endp
               
               
               
-;dx contains row, col
-;bl contains the character to write
+;dx CONTains row, col
+;bl CONTains the character to write
 ;uses di. 
 writecharat proc
     ;80x25
@@ -582,7 +582,7 @@ writecharat endp
             
             
             
-;dx contains row,col
+;dx CONTains row,col
 ;returns the character at bl
 ;uses di
 readcharat proc
@@ -617,8 +617,8 @@ readcharat endp
 
 
 
-;dx contains row, col
-;bx contains the offset of the string
+;dx CONTains row, col
+;bx CONTains the offset of the string
 writestringat proc
     push dx
     mov ax, dx

@@ -82,11 +82,11 @@ youwin db 'Well done man you have won the game $'	;string to print the indicator
 intro db '      Welcome to the MAZE Game $'	;string to print the starting text
 spoint db 'Pink point Indicate the starting point $'	;string to print the starting text
 epoint db 'Red Point indicate the Ending Point $'	;string to print the starting text
-press db 'Press Any Key to Continue $'	;string to print the starting text
+press db 'Press Any Key to CONTinue $'	;string to print the starting text
 ulabel db '^ $'
 maze db '   Maze Game   $'
 
-lrlabel db 'Controls are :         < + > $'
+lrlabel db 'CONTrols are :         < + > $'
 dlabel db 'v $'
 
 llabel db 'OOps You Hit the ememy $'
@@ -350,13 +350,13 @@ random proc near	;procedure to get a random number
    mov  ax, dx
    xor  dx, dx
    mov  cx, 4    
-   div  cx       ; here dx contains the remainder of the division - from 0 to 9
+   div  cx       ; here dx CONTains the remainder of the division - from 0 to 9
    add  dl, '0'  ; to ascii from '0' to '9'
    ret
 random endP
 
 
-ENEMY proc near	;procedure to control the movements of the ememies 
+ENEMY proc near	;procedure to CONTrol the movements of the ememies 
 jmp start1	;jump to go to the starting instruction of the procedure
 
 ;labels for enemy 1 movements
