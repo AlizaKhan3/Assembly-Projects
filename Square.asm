@@ -267,21 +267,26 @@ MAIN PROC          ;Main Procedure Starts here
 
     MOV  AX, BX                 ; Move input value to AX for multiplication
     MUL  BX                     ; Multiply the number by itself
-;     AAM
+  
     ; Display the result
     MOV  DL, AH                
     ADD  DL, 48                 ; Convert to ASCII
+      AAM
     MOV  AH, 02H                
     INT 21H
 
     MOV  DL, AL                 
-    ADD  DL, 48                 ; Convert to ASCII
+    ADD  DL, 48 
+      AAM                ; Convert to ASCII
     MOV  AH, 02H             
     INT  21H
 
     CALL NEWLINE
     CALL CONT
     JMP START
+
+
+
 
    
      ;---------------------------------Procedures---------------------------------------
