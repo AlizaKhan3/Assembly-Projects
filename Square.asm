@@ -14,7 +14,7 @@ DOSSEG
               DB "Enter Your Choice: ",13,10,'$'
      INPUT1   DB "Enter First Number (0-9): ",13,10,'$'
      INPUT2   DB "Enter Second Number (0-9): ",13,10,'$'
-     NUMBER_1 DB "Enter the Number for Sqaured: ",13,10, '$'
+     SQR_INPUT DB "Enter a Number: ",13,10, '$'
      ADD1     DB " --> For Addition",13,10,'$'
      SUB2     DB " --> For Subtraction",13,10,'$'
      MUL3     DB " --> For Multiplication",13,10,'$'
@@ -204,45 +204,85 @@ MAIN PROC          ;Main Procedure Starts here
                      JMP  START
      ; ---------------------------------------------------------------------------------
 
-     _SQUARED:
-          MOV  AH,09H
-          MOV  DX,OFFSET SQ_1
-          INT  21H
-          CALL NEWLINE
+     ; _SQUARE:
+     ;      MOV  AH,09H
+     ;      MOV  DX,OFFSET SQ_1
+     ;      INT  21H
+     ;      CALL NEWLINE
 
-          MOV  AH,09H                 ; FIRST Operand
-          MOV  DX,OFFSET NUMBER_1
-          INT  21H
-          MOV  AH,01H
-          INT  21H
-          ADD  AX,48
-          MOV  OP1,AL  
-          CALL NEWLINE
+     ;      MOV  AH,09H                 ; FIRST Operand
+     ;      MOV  DX,OFFSET SQR_INPUT
+     ;      INT  21H
+     ;      MOV  AH,01H
+     ;      INT  21H
+     ;      ADD  AX,48
+     ;      MOV  OP1,AL  
+     ;      CALL NEWLINE
 
-          MOV  AH,09H
-          MOV  DX, OFFSET ANS         ;PRINT ANSWER
-          INT  21H
+     ;      MOV  AH,09H
+     ;      MOV  DX, OFFSET ANS         ;PRINT ANSWER
+     ;      INT  21H
           
-          MOV OP2,AL
-          MUL AL
-          AAM  
+     ;      MOV DL,OP1
+     ;      MUL OP1
+     ;      AAM  
 
-          ; MOV CH,AH  
-          MOV CL,AL   
+     ;      ; MOV CH,AH  -----
+     ;      ; MOV CL,AL   -------
 
-          MOV DL,CL    
-          ADD DX,48 
-          MOV AH,02H  
-          INT 21H 
+     ;      ; MOV DL,CL    ---------
+     ;      SUB DX,48 
+     ;      CALL RESULT
+     
 
-          ; MOV DL,CH
-          ; ADD DL,48   
-          ; MOV AH,02H   
-          ; INT 21H   
+     ;      ; MOV DL,CH----------
+     ;      ; ADD DL,48   
+     ;      ; MOV AH,02H   
+     ;      ; INT 21H  -------- 
           
-          CALL NEWLINE
-          CALL CONT
-          JMP START  
+     ;      CALL NEWLINE
+     ;      CALL CONT
+     ;      JMP START  
+
+
+  _SQUARE:
+    MOV  AH,09H
+    MOV  DX,OFFSET SQ_1
+    INT  21H
+    CALL NEWLINE
+
+    MOV  AH,09H                 ; takes input
+    MOV  DX,OFFSET SQR_INPUT
+    INT  21H
+
+    MOV  AH,01H                 
+    INT  21H
+    SUB  AL, 48                 
+    MOV  BL, AL                 ; Move input to BL for multiplication
+    CALL NEWLINE
+
+    MOV  AH,09H
+    MOV  DX, OFFSET ANS         ; PRINT ANSWER
+    INT  21H
+
+    MOV  AX, BX                 ; Move input value to AX for multiplication
+    MUL  BX                     ; Multiply the number by itself
+;     AAM
+    ; Display the result
+    MOV  DL, AH                
+    ADD  DL, 48                 ; Convert to ASCII
+    MOV  AH, 02H                
+    INT 21H
+
+    MOV  DL, AL                 
+    ADD  DL, 48                 ; Convert to ASCII
+    MOV  AH, 02H             
+    INT  21H
+
+    CALL NEWLINE
+    CALL CONT
+    JMP START
+
    
      ;---------------------------------Procedures---------------------------------------
 RESULT PROC
@@ -317,7 +357,7 @@ NEWLINE ENDP
 
      OPT5:           
                      CMP  AL,'5'
-                     JMP  _SQUARED
+                     JMP  _SQUARE
                      JMP  OPT6
 
      OPT6:           
